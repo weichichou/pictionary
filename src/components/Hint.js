@@ -1,11 +1,24 @@
 import React from "react";
+import { connect } from "react-redux";
 
-export default class Chat extends React.Component {
+class Hint extends React.Component {
+  state = {
+    charNum: this.props.question.length,
+  };
+
   render() {
-    return (
-      <div>
-        <p>apple</p>
-      </div>
-    );
+    let initialDisplay = "";
+    for (let i = 0; i < this.state.charNum; i++) {
+      initialDisplay = initialDisplay.concat("_ ");
+    }
+
+    return <div>{initialDisplay}</div>;
   }
 }
+const mapStateToProps = (state) => {
+  return {
+    question: state,
+  };
+};
+
+export default connect(mapStateToProps)(Hint);
