@@ -1,10 +1,13 @@
 import React from "react";
+import { connect } from "react-redux";
 
-export default class Chat extends React.Component {
+class Chat extends React.Component {
   state = {
+    correctness: "",
     text: "",
     //isSubmitted: false,
-    guessed: [],
+    chat: [],
+    userGuess: "",
   };
 
   handleChange = (event) => {
@@ -17,15 +20,24 @@ export default class Chat extends React.Component {
     event.preventDefault();
     /* this.setState({ isSubmitted: true }); */
 
-    this.setState({ guessed: [...this.state.guessed, this.state.text] });
+    this.setState({ chat: [...this.state.chat, this.state.text] });
     this.setState({ text: "" });
+    this.setState({ userGuess: this.state.text });
+    this.checkAnswer(this.state.text);
+  };
+
+  checkAnswer = (text) => {
+    this.setState({
+      correctness: text === this.props.question ? "correct" : "incorrect",
+    });
   };
 
   render() {
     return (
       <div>
+        <div>{this.state.correctness}</div>
         <div>
-          {this.state.guessed.map((item) => (
+          {this.state.chat.map((item) => (
             <ul key={item}>{item}</ul>
           ))}
         </div>
@@ -45,3 +57,11 @@ export default class Chat extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    question: state,
+  };
+};
+
+export default connect(mapStateToProps)(Chat);
