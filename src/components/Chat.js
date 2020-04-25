@@ -1,14 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-import { guessed } from "../actions/guessAction";
+import { guessed, triggerHint } from "../actions/guessAction";
 
 class Chat extends React.Component {
   state = {
-    correctness: "",
     text: "",
-    //isSubmitted: false,
     chat: [],
-    userGuess: "",
   };
 
   handleChange = (event) => {
@@ -19,32 +16,35 @@ class Chat extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    /* this.setState({ isSubmitted: true }); */
 
     this.setState({ chat: [...this.state.chat, this.state.text] });
     this.setState({ text: "" });
-    this.setState({ userGuess: this.state.text });
-    this.checkAnswer(this.state.text);
+
     this.props.guessed(this.state.text);
+    this.checkAnswer(this.state.text);
   };
 
+  // use for each
+  // move the logic to hint reducer
   checkAnswer = (text) => {
-    this.setState({
-      correctness: text === this.props.question ? "correct" : "incorrect",
+    this.props.question.split("").map((element, index) => {
+      if (text.split("").includes(element)) {
+        this.props.triggerHint(index, element);
+      }
+      return "";
     });
   };
 
   render() {
+    console.log("hint in Chat", this.props.hint);
     return (
       <div>
-        <div>{this.state.correctness}</div>
         <div>
           {this.state.chat.map((item) => (
             <ul key={item}>{item}</ul>
           ))}
         </div>
         <form onSubmit={this.handleSubmit}>
-          {/* <lable>answer</lable> */}
           <input
             onChange={this.handleChange}
             name="text"
@@ -64,7 +64,8 @@ const mapStateToProps = (reduxState) => {
   return {
     question: reduxState.question,
     guess: reduxState.guess,
+    hint: reduxState.hint,
   };
 };
 
-export default connect(mapStateToProps, { guessed })(Chat);
+export default connect(mapStateToProps, { guessed, triggerHint })(Chat);

@@ -8,7 +8,7 @@ export function guessed(text) {
 }
 
 export const HINT = "HINT";
-export function hint(index, element) {
+export function triggerHint(index, element) {
   return {
     type: HINT,
     payload: { index: index, element: element },

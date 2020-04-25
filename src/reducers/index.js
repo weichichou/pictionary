@@ -20,11 +20,13 @@ function guessReducer(state = null, action) {
   }
 }
 
+// put checkanswer login here
 function hintReducer(state = initialState.split("").map((e) => "_ "), action) {
   switch (action.type) {
     case "HINT": {
-      state[action.payload.index] = action.payload.element;
-      return state;
+      const newState = [...state];
+      newState[action.payload.index] = action.payload.element;
+      return newState;
     }
     default: {
       return state;
