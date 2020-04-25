@@ -1,8 +1,8 @@
 export const GUESSED = "GUESSED";
 
-function guessed(text) {
+export function guessed(text) {
   return {
-    type: GUEESED,
+    type: GUESSED,
     payload: text,
   };
 }

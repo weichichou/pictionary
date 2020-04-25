@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { guessed } from "../actions/guessAction";
 
 class Chat extends React.Component {
   state = {
@@ -24,6 +25,7 @@ class Chat extends React.Component {
     this.setState({ text: "" });
     this.setState({ userGuess: this.state.text });
     this.checkAnswer(this.state.text);
+    this.props.guessed(this.state.text);
   };
 
   checkAnswer = (text) => {
@@ -58,10 +60,11 @@ class Chat extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (reduxState) => {
   return {
-    question: state,
+    question: reduxState.question,
+    guess: reduxState.guess,
   };
 };
 
-export default connect(mapStateToProps)(Chat);
+export default connect(mapStateToProps, { guessed })(Chat);
