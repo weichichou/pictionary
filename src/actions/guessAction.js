@@ -11,6 +11,6 @@ export const HINT = "HINT";
 export function triggerHint(index, element) {
   return {
     type: HINT,
-    payload: { index: index, element: element },
+    payload: { index, element },
   };
 }
