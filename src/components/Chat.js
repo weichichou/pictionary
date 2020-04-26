@@ -21,18 +21,7 @@ class Chat extends React.Component {
     this.setState({ text: "" });
 
     this.props.guessed(this.state.text);
-    this.checkAnswer(this.state.text);
-  };
-
-  // use for each
-  // move the logic to hint reducer
-  checkAnswer = (text) => {
-    this.props.question.split("").map((element, index) => {
-      if (text.split("").includes(element)) {
-        this.props.triggerHint(index, element);
-      }
-      return "";
-    });
+    this.props.triggerHint(this.state.text);
   };
 
   render() {

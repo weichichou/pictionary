@@ -25,7 +25,14 @@ function hintReducer(state = initialState.split("").map((e) => "_ "), action) {
   switch (action.type) {
     case "HINT": {
       const newState = [...state];
-      newState[action.payload.index] = action.payload.element;
+      initialState.split("").forEach((element, index) => {
+        if (action.payload.includes(element)) {
+          newState[index] = element;
+        }
+      });
+      /* const newState = [...state];
+      newState[action.payload.index] = action.payload.element; */
+
       return newState;
     }
     default: {
