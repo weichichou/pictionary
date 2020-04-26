@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 
 class Hint extends React.Component {
   render() {
-    console.log("hint?", this.props.hint);
     return <div>{this.props.hint.join("")}</div>;
   }
 }

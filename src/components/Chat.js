@@ -25,7 +25,6 @@ class Chat extends React.Component {
   };
 
   render() {
-    console.log("hint in Chat", this.props.hint);
     return (
       <div>
         <div>
