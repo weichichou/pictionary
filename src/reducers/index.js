@@ -20,12 +20,16 @@ function guessReducer(state = null, action) {
   }
 }
 
-// put checkanswer login here
 function hintReducer(state = initialState.split("").map((e) => "_ "), action) {
   switch (action.type) {
     case "HINT": {
       const newState = [...state];
-      newState[action.payload.index] = action.payload.element;
+      initialState.split("").forEach((element, index) => {
+        if (action.payload.includes(element)) {
+          newState[index] = element;
+        }
+      });
+
       return newState;
     }
     default: {
