@@ -1,8 +1,11 @@
 import { combineReducers } from "redux";
 
 const initialState = "rainbow";
-function questionReducer(state = initialState, action) {
+function questionReducer(state = null, action) {
   switch (action.type) {
+    case "SELECTED_QUESTION": {
+      return action.payload;
+    }
     default: {
       return state;
     }

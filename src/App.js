@@ -4,6 +4,7 @@ import "./App.css";
 import Hint from "./components/Hint";
 import Canvas from "./components/Canvas";
 import Chat from "./components/Chat";
+import QuestionSelection from "./components/QuestionSelection";
 
 function App() {
   return (
@@ -16,6 +17,9 @@ function App() {
         <Canvas />
         <Chat />
       </main>
+      <footer>
+        <QuestionSelection />
+      </footer>
     </div>
   );
 }

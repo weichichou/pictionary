@@ -14,3 +14,12 @@ export function triggerHint(text) {
     payload: text,
   };
 }
+
+export const SELECTED_QUESTION = "SELECTED_QUESTION";
+
+export function selectedQuestion(text) {
+  return {
+    type: SELECTED_QUESTION,
+    payload: text,
+  };
+}
