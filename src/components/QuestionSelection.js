@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import wordlist from "./question-list";
+import { selectedQuestion } from "../actions/guessAction";
 
 class QuestionSelection extends React.Component {
   getRandomNum = () => {
@@ -11,6 +12,7 @@ class QuestionSelection extends React.Component {
     event.preventDefault();
     console.log("got clicked?");
     console.log(event.currentTarget.value);
+    this.props.selectedQuestion(event.currentTarget.value);
   };
 
   render() {
@@ -45,4 +47,6 @@ const mapStateToProps = (reduxState) => {
   };
 };
 
-export default connect(mapStateToProps)(QuestionSelection);
+export default connect(mapStateToProps, { selectedQuestion })(
+  QuestionSelection
+);
