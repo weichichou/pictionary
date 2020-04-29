@@ -8,10 +8,10 @@ export function guessed(text) {
 }
 
 export const HINT = "HINT";
-export function triggerHint(text) {
+export function triggerHint(text, question) {
   return {
     type: HINT,
-    payload: text,
+    payload: { text, question },
   };
 }
 

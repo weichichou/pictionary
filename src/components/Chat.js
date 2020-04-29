@@ -21,7 +21,7 @@ class Chat extends React.Component {
     this.setState({ text: "" });
 
     this.props.guessed(this.state.text);
-    this.props.triggerHint(this.state.text);
+    this.props.triggerHint(this.state.text, this.props.question);
   };
 
   render() {

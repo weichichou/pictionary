@@ -3,12 +3,21 @@ import { connect } from "react-redux";
 
 class Hint extends React.Component {
   render() {
-    return <div>{this.props.hint.join("")}</div>;
+    let display = "";
+    if (this.props.question) {
+      display =
+        this.props.hint === null
+          ? this.props.question.split("").map((e) => "_ ")
+          : this.props.hint.join("");
+    }
+
+    return <div>{display}</div>;
   }
 }
 const mapStateToProps = (reduxState) => {
   return {
     hint: reduxState.hint,
+    question: reduxState.question,
   };
 };
 
