@@ -1,10 +1,11 @@
 import React from "react";
+import io from "socket.io-client";
 
 //import CanvasDraw from "react-canvas-draw";
 
 export default class Canvas extends React.Component {
   componentDidMount = () => {
-    //var socket = io();
+    const socket = io("http://localhost:3001/");
     var canvas = document.getElementsByClassName("whiteboard")[0];
     //var colors = document.getElementsByClassName("color");
     var context = canvas.getContext("2d");
@@ -29,7 +30,7 @@ export default class Canvas extends React.Component {
       colors[i].addEventListener("click", onColorUpdate, false);
     } */
 
-    //socket.on("drawing", onDrawingEvent);
+    socket.on("drawing", onDrawingEvent);
 
     // window.addEventListener("resize", onResize, false);
     // onResize();
@@ -57,13 +58,13 @@ export default class Canvas extends React.Component {
       var w = canvas.width;
       var h = canvas.height;
 
-      /*  socket.emit("drawing", {
-        x0: x0 / w,
-        y0: y0 / h,
-        x1: x1 / w,
-        y1: y1 / h,
+      socket.emit("drawing", {
+        x0: x0,
+        y0: y0,
+        x1: x1,
+        y1: y1,
         color: color,
-      }); */
+      });
     }
 
     function onMouseDown(e) {
@@ -125,9 +126,7 @@ export default class Canvas extends React.Component {
     }
 
     function onDrawingEvent(data) {
-      var w = canvas.width;
-      var h = canvas.height;
-      drawLine(data.x0 * w, data.y0 * h, data.x1 * w, data.y1 * h, data.color);
+      drawLine(data.x0, data.y0, data.x1, data.y1, data.color);
     }
 
     // make the canvas fill its parent
