@@ -1,11 +1,11 @@
 import React from "react";
-import io from "socket.io-client";
+//import io from "socket.io-client";
 
 //import CanvasDraw from "react-canvas-draw";
 
 export default class Canvas extends React.Component {
   componentDidMount = () => {
-    const socket = io("http://localhost:3001/");
+    //const socket = io("http://localhost:3001/");
     var canvas = document.getElementsByClassName("whiteboard")[0];
     //var colors = document.getElementsByClassName("color");
     var context = canvas.getContext("2d");
@@ -30,8 +30,9 @@ export default class Canvas extends React.Component {
       colors[i].addEventListener("click", onColorUpdate, false);
     } */
 
-    socket.on("drawing", onDrawingEvent);
-
+    this.props.socket.on("drawing", onDrawingEvent);
+    console.log("what is this?", this);
+    console.log("what is props?", this.props);
     // window.addEventListener("resize", onResize, false);
     // onResize();
 
@@ -42,8 +43,8 @@ export default class Canvas extends React.Component {
         y: evt.clientY - rect.top,
       };
     }
-
-    function drawLine(x0, y0, x1, y1, color, emit) {
+    // 把傳統的function改成arrow function, 解決this的問題
+    const drawLine = (x0, y0, x1, y1, color, emit) => {
       context.beginPath();
       context.moveTo(x0, y0);
       context.lineTo(x1, y1);
@@ -55,17 +56,17 @@ export default class Canvas extends React.Component {
       if (!emit) {
         return;
       }
-      var w = canvas.width;
-      var h = canvas.height;
+      /* var w = canvas.width;
+      var h = canvas.height; */
 
-      socket.emit("drawing", {
+      this.props.socket.emit("drawing", {
         x0: x0,
         y0: y0,
         x1: x1,
         y1: y1,
         color: color,
       });
-    }
+    };
 
     function onMouseDown(e) {
       current.x = getMousePos(canvas, e).x;
