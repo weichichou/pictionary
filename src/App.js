@@ -8,25 +8,23 @@ import Chat from "./components/Chat";
 import QuestionSelection from "./components/QuestionSelection";
 
 class App extends React.Component {
-  // componentDidMount = () => {
-  //   const socket = io("http://localhost:3001/");
-  // };
+  state = {
+    socket: io("http://localhost:3001/"),
+  };
 
   render() {
-    const socket = io("http://localhost:3001/");
     return (
       <div>
         <div className="App">
           <header>
-            {/* <h1>pictionary</h1> */}
             <Hint />
           </header>
           <main className="main-div">
-            <Canvas socket={socket} />
-            <Chat socket={socket} />
+            <Canvas socket={this.state.socket} />
+            <Chat socket={this.state.socket} />
           </main>
           <footer>
-            <QuestionSelection socket={socket} />
+            <QuestionSelection socket={this.state.socket} />
           </footer>
         </div>
       </div>
