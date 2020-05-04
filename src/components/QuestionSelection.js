@@ -4,6 +4,13 @@ import wordlist from "./question-list";
 import { selectedQuestion } from "../actions/guessAction";
 
 class QuestionSelection extends React.Component {
+  componentDidMount = () => {
+    this.props.socket.on("question", (word) => {
+      console.log("socket word:", word);
+      this.props.selectedQuestion(word);
+    });
+  };
+
   getRandomNum = () => {
     return Math.floor(Math.random() * wordlist.length);
   };
@@ -13,6 +20,7 @@ class QuestionSelection extends React.Component {
     console.log("got clicked?");
     console.log(event.currentTarget.value);
     this.props.selectedQuestion(event.currentTarget.value);
+    this.props.socket.emit("question", event.currentTarget.value);
   };
 
   render() {
