@@ -23,10 +23,10 @@ class App extends React.Component {
           </header>
           <main className="main-div">
             <Canvas socket={socket} />
-            <Chat />
+            <Chat socket={socket} />
           </main>
           <footer>
-            <QuestionSelection />
+            <QuestionSelection socket={socket} />
           </footer>
         </div>
       </div>
