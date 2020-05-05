@@ -6,7 +6,6 @@ import { selectedQuestion, triggerHint } from "../actions/guessAction";
 class QuestionSelection extends React.Component {
   componentDidMount = () => {
     this.props.socket.on("question", (word) => {
-      console.log("socket word:", word);
       this.props.selectedQuestion(word);
       this.props.triggerHint("", word);
     });
@@ -18,8 +17,7 @@ class QuestionSelection extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log("got clicked?");
-    console.log(event.currentTarget.value);
+
     this.props.selectedQuestion(event.currentTarget.value);
     this.props.socket.emit("question", event.currentTarget.value);
     this.props.triggerHint("", event.currentTarget.value);

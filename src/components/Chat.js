@@ -11,7 +11,6 @@ class Chat extends React.Component {
   componentDidMount = () => {
     // socket.on是一個註冊的動作
     this.props.socket.on("chat msg", (msg) => {
-      console.log("msg in client side", msg);
       this.setState({ chat: [...this.state.chat, msg] });
     });
   };
@@ -24,13 +23,15 @@ class Chat extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-
     this.setState({ text: "" });
 
     this.props.guessed(this.state.text);
     this.props.triggerHint(this.state.text, this.props.question);
 
-    this.props.socket.emit("chat msg", this.state.text);
+    this.props.socket.emit("chat msg", {
+      username: this.props.username,
+      text: this.state.text,
+    });
   };
 
   render() {
@@ -38,7 +39,7 @@ class Chat extends React.Component {
       <div>
         <div>
           {this.state.chat.map((item) => (
-            <ul key={item}>{item}</ul>
+            <ul key={item}>{`${item.username}: ${item.text}`}</ul>
           ))}
         </div>
         <form onSubmit={this.handleSubmit}>

@@ -10,9 +10,19 @@ import QuestionSelection from "./components/QuestionSelection";
 class App extends React.Component {
   state = {
     socket: io("http://localhost:3001/"),
+    username: null,
+  };
+
+  registerUsername = () => {
+    let userInput = window.prompt("What is your name?", "");
+    this.setState({ username: userInput });
   };
 
   render() {
+    if (this.state.username === null) {
+      this.registerUsername();
+    }
+
     return (
       <div>
         <div className="App">
@@ -21,7 +31,7 @@ class App extends React.Component {
           </header>
           <main className="main-div">
             <Canvas socket={this.state.socket} />
-            <Chat socket={this.state.socket} />
+            <Chat socket={this.state.socket} username={this.state.username} />
           </main>
           <footer>
             <QuestionSelection socket={this.state.socket} />
