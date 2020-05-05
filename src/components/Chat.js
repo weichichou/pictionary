@@ -1,27 +1,19 @@
 import React from "react";
 import { connect } from "react-redux";
 import { guessed, triggerHint } from "../actions/guessAction";
-// import io from "socket.io-client";
 
 class Chat extends React.Component {
   state = {
     text: "",
     chat: [],
-    //socket: null,
   };
 
   componentDidMount = () => {
-    /* if (this.state.socket === null) {
-      this.props.socket; */
-
     // socket.on是一個註冊的動作
     this.props.socket.on("chat msg", (msg) => {
       console.log("msg in client side", msg);
       this.setState({ chat: [...this.state.chat, msg] });
     });
-
-    //this.setState({ socket: this.props.socket });
-    //}
   };
 
   handleChange = (event) => {
@@ -33,7 +25,6 @@ class Chat extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    //this.setState({ chat: [...this.state.chat, this.state.text] });
     this.setState({ text: "" });
 
     this.props.guessed(this.state.text);

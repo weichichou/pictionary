@@ -57,8 +57,6 @@ export default class Canvas extends React.Component {
       current.y = getMousePos(canvas, e).y;
 
       drawing = true;
-      //current.x = e.clientX || e.touches[0].clientX;
-      //current.y = e.clientY || e.touches[0].clientY;
     }
 
     function onMouseUp(e) {

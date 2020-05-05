@@ -26,8 +26,6 @@ function guessReducer(state = null, action) {
 function hintReducer(state = null, action) {
   switch (action.type) {
     case "HINT": {
-      console.log("action.payload.question", action.payload.question);
-      console.log("action.payload.text", action.payload.text);
       const word = action.payload.question.split("").map((e) => "_ ");
       let newWord = [...word];
       action.payload.question.split("").forEach((element, index) => {
@@ -35,8 +33,7 @@ function hintReducer(state = null, action) {
           newWord[index] = element;
         }
       });
-      console.log("word", word);
-      console.log("newWord", newWord);
+
       return newWord;
     }
     default: {

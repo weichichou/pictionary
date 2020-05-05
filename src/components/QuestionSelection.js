@@ -1,13 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
 import wordlist from "./question-list";
-import { selectedQuestion } from "../actions/guessAction";
+import { selectedQuestion, triggerHint } from "../actions/guessAction";
 
 class QuestionSelection extends React.Component {
   componentDidMount = () => {
     this.props.socket.on("question", (word) => {
       console.log("socket word:", word);
       this.props.selectedQuestion(word);
+      this.props.triggerHint("", word);
     });
   };
 
@@ -21,6 +22,7 @@ class QuestionSelection extends React.Component {
     console.log(event.currentTarget.value);
     this.props.selectedQuestion(event.currentTarget.value);
     this.props.socket.emit("question", event.currentTarget.value);
+    this.props.triggerHint("", event.currentTarget.value);
   };
 
   render() {
@@ -55,6 +57,6 @@ const mapStateToProps = (reduxState) => {
   };
 };
 
-export default connect(mapStateToProps, { selectedQuestion })(
+export default connect(mapStateToProps, { selectedQuestion, triggerHint })(
   QuestionSelection
 );
