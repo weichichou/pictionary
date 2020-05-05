@@ -6,12 +6,16 @@ class Chat extends React.Component {
   state = {
     text: "",
     chat: [],
+    roundover: "",
   };
 
   componentDidMount = () => {
     // socket.on是一個註冊的動作
     this.props.socket.on("chat msg", (msg) => {
       this.setState({ chat: [...this.state.chat, msg] });
+    });
+    this.props.socket.on("roundover", (username) => {
+      this.setState({ roundover: username });
     });
   };
 
@@ -32,6 +36,13 @@ class Chat extends React.Component {
       username: this.props.username,
       text: this.state.text,
     });
+    this.checkAnswer(this.state.text);
+  };
+
+  checkAnswer = (text) => {
+    if (text === this.props.question) {
+      this.props.socket.emit("roundover", this.props.username);
+    }
   };
 
   render() {
@@ -39,8 +50,11 @@ class Chat extends React.Component {
       <div>
         <div>
           {this.state.chat.map((item) => (
-            <ul key={item}>{`${item.username}: ${item.text}`}</ul>
+            <ul key={item.text}>{`${item.username}: ${item.text}`}</ul>
           ))}
+        </div>
+        <div className="winning-msg">
+          {this.state.roundover !== "" ? `${this.state.roundover} wins!` : ""}
         </div>
         <form onSubmit={this.handleSubmit}>
           <input

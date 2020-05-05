@@ -5,6 +5,11 @@
   height: 100vh;
 }
 
+.winning-msg {
+  color: lightgreen;
+  font-weight: bold;
+}
+
 .whiteboard {
   width: 300px;
   height: 300px;
