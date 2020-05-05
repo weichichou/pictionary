@@ -4,10 +4,19 @@ import wordlist from "./question-list";
 import { selectedQuestion, triggerHint } from "../actions/guessAction";
 
 class QuestionSelection extends React.Component {
+  state = {
+    hidden: false,
+  };
+
   componentDidMount = () => {
     this.props.socket.on("question", (word) => {
       this.props.selectedQuestion(word);
       this.props.triggerHint("", word);
+      console.log("question selection component?");
+      this.setState({ hidden: true });
+    });
+    this.props.socket.on("roundover", (username) => {
+      this.setState({ hidden: false });
     });
   };
 
@@ -35,7 +44,7 @@ class QuestionSelection extends React.Component {
     }
 
     return (
-      <div>
+      <div className={this.state.hidden ? "hidden" : "showing"}>
         <button onClick={this.handleSubmit} value={wordlist[q1]}>
           {wordlist[q1]}
         </button>
