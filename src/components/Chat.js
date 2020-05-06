@@ -56,8 +56,9 @@ class Chat extends React.Component {
         <div className="winning-msg">
           {this.state.roundover !== "" ? `${this.state.roundover} wins!` : ""}
         </div>
-        <form onSubmit={this.handleSubmit}>
+        <form className="form-inline" onSubmit={this.handleSubmit}>
           <input
+            className="form-control"
             onChange={this.handleChange}
             name="text"
             value={this.state.text}
@@ -65,7 +66,9 @@ class Chat extends React.Component {
             placeholder="Your answer"
             required
           />
-          <button type="submit">Submit</button>
+          <button className="btn btn-primary" type="submit">
+            Submit
+          </button>
         </form>
       </div>
     );
