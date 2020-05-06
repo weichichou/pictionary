@@ -48,9 +48,9 @@ class Chat extends React.Component {
   render() {
     return (
       <div>
-        <div>
+        <div className="chat-div">
           {this.state.chat.map((item) => (
-            <ul key={item.text}>{`${item.username}: ${item.text}`}</ul>
+            <p key={item.text}>{`${item.username}: ${item.text}`}</p>
           ))}
         </div>
         <div className="winning-msg">

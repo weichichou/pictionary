@@ -10,12 +10,20 @@
 }
 
 .winning-msg {
-  color: lightgreen;
+  color: rgb(44, 247, 44);
   font-weight: bold;
+  text-align: left;
+  margin-left: 1.5rem;
+  margin-bottom: 0.5rem;
 }
 
 form {
   margin-left: 1rem;
+}
+
+.chat-div {
+  text-align: left;
+  margin-left: 1.5rem;
 }
 
 .btn {
