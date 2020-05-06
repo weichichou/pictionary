@@ -45,13 +45,25 @@ class QuestionSelection extends React.Component {
 
     return (
       <div className={this.state.hidden ? "hidden" : "showing"}>
-        <button onClick={this.handleSubmit} value={wordlist[q1]}>
+        <button
+          className="btn btn-warning"
+          onClick={this.handleSubmit}
+          value={wordlist[q1]}
+        >
           {wordlist[q1]}
         </button>
-        <button onClick={this.handleSubmit} value={wordlist[q2]}>
+        <button
+          className="btn btn-warning"
+          onClick={this.handleSubmit}
+          value={wordlist[q2]}
+        >
           {wordlist[q2]}
         </button>
-        <button onClick={this.handleSubmit} value={wordlist[q3]}>
+        <button
+          className="btn btn-warning"
+          onClick={this.handleSubmit}
+          value={wordlist[q3]}
+        >
           {wordlist[q3]}
         </button>
       </div>
