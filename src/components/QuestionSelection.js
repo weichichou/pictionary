@@ -45,6 +45,16 @@ class QuestionSelection extends React.Component {
 
     return (
       <div className={this.state.hidden ? "hidden" : "showing"}>
+        <span
+          style={{
+            fontSize: 20,
+            fontWeight: 900,
+            color: "orange",
+            verticalAlign: "middle",
+          }}
+        >
+          SELECT A WORD:{" "}
+        </span>
         <button
           className="btn btn-warning"
           onClick={this.handleSubmit}
