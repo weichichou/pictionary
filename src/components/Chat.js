@@ -6,13 +6,16 @@ class Chat extends React.Component {
   state = {
     text: "",
     chat: [],
+    roundover: "",
   };
 
   componentDidMount = () => {
     // socket.on是一個註冊的動作
     this.props.socket.on("chat msg", (msg) => {
-      console.log("msg in client side", msg);
       this.setState({ chat: [...this.state.chat, msg] });
+    });
+    this.props.socket.on("roundover", (username) => {
+      this.setState({ roundover: username });
     });
   };
 
@@ -24,25 +27,38 @@ class Chat extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-
     this.setState({ text: "" });
 
     this.props.guessed(this.state.text);
     this.props.triggerHint(this.state.text, this.props.question);
 
-    this.props.socket.emit("chat msg", this.state.text);
+    this.props.socket.emit("chat msg", {
+      username: this.props.username,
+      text: this.state.text,
+    });
+    this.checkAnswer(this.state.text);
+  };
+
+  checkAnswer = (text) => {
+    if (text === this.props.question) {
+      this.props.socket.emit("roundover", this.props.username);
+    }
   };
 
   render() {
     return (
       <div>
-        <div>
+        <div className="chat-div">
           {this.state.chat.map((item) => (
-            <ul key={item}>{item}</ul>
+            <p key={item.text}>{`${item.username}: ${item.text}`}</p>
           ))}
         </div>
-        <form onSubmit={this.handleSubmit}>
+        <div className="winning-msg">
+          {this.state.roundover !== "" ? `${this.state.roundover} wins!` : ""}
+        </div>
+        <form className="form-inline" onSubmit={this.handleSubmit}>
           <input
+            className="form-control"
             onChange={this.handleChange}
             name="text"
             value={this.state.text}
@@ -50,7 +66,9 @@ class Chat extends React.Component {
             placeholder="Your answer"
             required
           />
-          <button type="submit">Submit</button>
+          <button className="btn btn-primary" type="submit">
+            Submit
+          </button>
         </form>
       </div>
     );

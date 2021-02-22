@@ -75,7 +75,6 @@ export default class Canvas extends React.Component {
     }
 
     function onMouseMove(e) {
-      console.log("client", e.clientX, e.clientY);
       if (!drawing) {
         return;
       }

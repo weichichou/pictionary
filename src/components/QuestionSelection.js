@@ -4,11 +4,19 @@ import wordlist from "./question-list";
 import { selectedQuestion, triggerHint } from "../actions/guessAction";
 
 class QuestionSelection extends React.Component {
+  state = {
+    hidden: false,
+  };
+
   componentDidMount = () => {
     this.props.socket.on("question", (word) => {
-      console.log("socket word:", word);
       this.props.selectedQuestion(word);
       this.props.triggerHint("", word);
+      console.log("question selection component?");
+      this.setState({ hidden: true });
+    });
+    this.props.socket.on("roundover", (username) => {
+      this.setState({ hidden: false });
     });
   };
 
@@ -18,8 +26,7 @@ class QuestionSelection extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log("got clicked?");
-    console.log(event.currentTarget.value);
+
     this.props.selectedQuestion(event.currentTarget.value);
     this.props.socket.emit("question", event.currentTarget.value);
     this.props.triggerHint("", event.currentTarget.value);
@@ -37,14 +44,36 @@ class QuestionSelection extends React.Component {
     }
 
     return (
-      <div>
-        <button onClick={this.handleSubmit} value={wordlist[q1]}>
+      <div className={this.state.hidden ? "hidden" : "showing"}>
+        <span
+          style={{
+            fontSize: 20,
+            fontWeight: 900,
+            color: "orange",
+            verticalAlign: "middle",
+          }}
+        >
+          SELECT A WORD:{" "}
+        </span>
+        <button
+          className="btn btn-warning"
+          onClick={this.handleSubmit}
+          value={wordlist[q1]}
+        >
           {wordlist[q1]}
         </button>
-        <button onClick={this.handleSubmit} value={wordlist[q2]}>
+        <button
+          className="btn btn-warning"
+          onClick={this.handleSubmit}
+          value={wordlist[q2]}
+        >
           {wordlist[q2]}
         </button>
-        <button onClick={this.handleSubmit} value={wordlist[q3]}>
+        <button
+          className="btn btn-warning"
+          onClick={this.handleSubmit}
+          value={wordlist[q3]}
+        >
           {wordlist[q3]}
         </button>
       </div>
